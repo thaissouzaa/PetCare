@@ -1,0 +1,40 @@
+package controller;
+
+import model.dao.CRUD;
+import model.dao.Conexao;
+import model.dao.Usuario;
+
+import java.sql.Statement;
+
+public class UsuarioController {
+
+    private CRUD CRUDUsuario;
+    private String tabela = "usuario";
+
+    public UsuarioController() {
+    }
+
+    public boolean conectaBD(String db) {
+        try {
+            Conexao conn = new Conexao();
+            conn.conectaBD(db);
+            Statement s = conn.getS();
+            CRUDUsuario = new CRUD(s);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //Inserir Usuario
+
+    public String InserirUsuario(String tabela, Usuario usuario){
+        try {
+            return this.CRUDUsuario.InserirUsuario(tabela, usuario);
+        }  catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Não foi possível adicionar usuário.";
+    }
+}
